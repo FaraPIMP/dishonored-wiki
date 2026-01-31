@@ -1,0 +1,345 @@
+@import '../../style/variables.less';
+
+.game-hub-container {
+    min-height: 100vh;
+    background: #000000;
+    padding: 80px 40px 40px;
+    position: relative;
+    overflow: hidden;
+
+    &.dishonored1 {
+        background: #000000 url('../../assets/fon1.png') center/cover no-repeat;
+    }
+
+    &.dishonored2 {
+        background: #000000 url('../../assets/fon2.jpg') center/cover no-repeat;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(circle at 30% 40%, rgba(0, 0, 0, 0.4) 0%, transparent 50%),
+            radial-gradient(circle at 70% 60%, rgba(0, 0, 0, 0.3) 0%, transparent 50%),
+            rgba(0, 0, 0, 0.5);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(255, 255, 255, 0.01) 2px,
+            rgba(255, 255, 255, 0.01) 4px
+        );
+        pointer-events: none;
+        z-index: 0;
+    }
+}
+
+.back-button {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    text-transform: uppercase;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.4);
+        transform: translateX(-5px);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+}
+
+.hub-header {
+    text-align: center;
+    margin-bottom: 100px;
+    position: relative;
+    z-index: 1;
+
+    .game-number {
+        font-size: 180px;
+        font-weight: 900;
+        color: rgba(255, 255, 255, 0.03);
+        line-height: 1;
+        margin-bottom: -60px;
+        font-family: 'Arial Black', sans-serif;
+        letter-spacing: -5px;
+    }
+
+    .game-title {
+        font-size: 72px;
+        font-weight: 900;
+        color: white;
+        margin: 20px 0 15px;
+        letter-spacing: 8px;
+        text-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+        font-family: 'Arial Black', sans-serif;
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(
+                to right,
+                transparent,
+                rgba(255, 255, 255, 0.6),
+                transparent
+            );
+        }
+    }
+
+    .game-subtitle {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.5);
+        font-style: italic;
+        margin: 25px 0 10px;
+        letter-spacing: 3px;
+        font-weight: 300;
+    }
+
+    .game-year {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.3);
+        margin-top: 15px;
+        letter-spacing: 4px;
+        font-weight: 200;
+    }
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    padding: 0 20px;
+}
+
+.category-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 60px 40px;
+    text-decoration: none;
+    color: white;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.05),
+            transparent
+        );
+        transition: left 0.6s ease;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: white;
+        transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    &:hover {
+        transform: translateY(-8px);
+        border-color: rgba(255, 255, 255, 0.4);
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 
+            0 20px 60px rgba(0, 0, 0, 0.6),
+            0 0 40px rgba(255, 255, 255, 0.05);
+
+        &::before {
+            left: 100%;
+        }
+
+        &::after {
+            width: 100%;
+        }
+
+        .card-number {
+            opacity: 0.15;
+            transform: translateY(-10px) scale(1.1);
+        }
+
+        .card-title {
+            letter-spacing: 6px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .card-description {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .card-hover-overlay {
+            opacity: 1;
+        }
+    }
+
+    .card-number {
+        font-size: 120px;
+        font-weight: 900;
+        color: rgba(255, 255, 255, 0.08);
+        position: absolute;
+        top: -20px;
+        right: 20px;
+        line-height: 1;
+        font-family: 'Arial Black', sans-serif;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 0;
+    }
+
+    .card-title {
+        font-size: 32px;
+        font-weight: 900;
+        margin-bottom: 20px;
+        letter-spacing: 4px;
+        position: relative;
+        z-index: 1;
+        transition: all 0.4s ease;
+        text-transform: uppercase;
+    }
+
+    .card-description {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.6);
+        line-height: 1.8;
+        position: relative;
+        z-index: 1;
+        opacity: 0.8;
+        transform: translateX(-10px);
+        transition: all 0.4s ease;
+        letter-spacing: 1px;
+        font-weight: 300;
+    }
+
+    .card-hover-overlay {
+        position: absolute;
+        top: 50%;
+        right: 40px;
+        transform: translateY(-50%);
+        width: 60px;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.3);
+        opacity: 0;
+        transition: all 0.4s ease;
+        z-index: 1;
+
+        &::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+        }
+    }
+}
+
+@media (max-width: 1200px) {
+    .categories-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-hub-container {
+        padding: 60px 20px 20px;
+    }
+
+    .hub-header {
+        margin-bottom: 60px;
+
+        .game-number {
+            font-size: 100px;
+            margin-bottom: -30px;
+        }
+
+        .game-title {
+            font-size: 48px;
+            letter-spacing: 4px;
+        }
+
+        .game-subtitle {
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+    }
+
+    .categories-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        padding: 0;
+    }
+
+    .category-card {
+        padding: 50px 30px;
+
+        .card-number {
+            font-size: 80px;
+            top: 10px;
+            right: 15px;
+        }
+
+        .card-title {
+            font-size: 26px;
+            letter-spacing: 3px;
+        }
+
+        .card-description {
+            font-size: 12px;
+        }
+    }
+}

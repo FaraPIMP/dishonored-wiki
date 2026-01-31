@@ -1,0 +1,465 @@
+@import '../../style/variables.less';
+
+.powers-page {
+    min-height: 100vh;
+    background: #000000;
+    position: relative;
+    overflow-x: hidden;
+    padding: 500px 60px 60px;
+
+    // Отдельные настройки для Dishonored 2
+    &.dishonored-2 {
+        padding: 180px 60px 60px;
+    }
+
+    .page-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('../../assets/sbosob.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0.15;
+        z-index: 0;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 25% 35%, rgba(255, 255, 255, 0.025) 0%, transparent 50%),
+                radial-gradient(ellipse at 75% 65%, rgba(255, 255, 255, 0.015) 0%, transparent 50%);
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(255, 255, 255, 0.008) 2px,
+                rgba(255, 255, 255, 0.008) 4px
+            );
+        }
+    }
+
+    .page-header {
+        position: relative;
+        z-index: 10;
+        margin-bottom: 80px;
+        padding-top: 40px;
+        text-align: center;
+
+        .back-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            z-index: 100;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            text-transform: uppercase;
+            font-weight: 600;
+
+            .back-icon {
+                font-size: 16px;
+                transition: transform 0.3s ease;
+            }
+
+            &:hover {
+                color: #fff;
+                background: rgba(255, 255, 255, 0.1);
+                border-color: rgba(255, 255, 255, 0.3);
+                transform: translateX(-5px);
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+
+                .back-icon {
+                    transform: translateX(-3px);
+                }
+            }
+        }
+
+        .page-title {
+            font-size: 56px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 12px;
+            margin: 0;
+            text-align: center;
+            text-transform: uppercase;
+            font-family: 'Arial Black', sans-serif;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+            position: relative;
+            display: inline-block;
+
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: -20px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 120px;
+                height: 1px;
+                background: linear-gradient(
+                    to right,
+                    transparent,
+                    rgba(255, 255, 255, 0.5),
+                    transparent
+                );
+            }
+        }
+
+        .game-badge {
+            display: block;
+            text-align: center;
+            margin: 35px auto 0;
+            padding: 8px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            width: fit-content;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+    }
+
+    .powers-grid {
+        position: relative;
+        z-index: 10;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 35px;
+        max-width: 1600px;
+        margin: 0 auto;
+    }
+
+    .power-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 35px 30px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        backdrop-filter: blur(20px);
+
+        // Gradient backgrounds based on power type
+        &.type-movement {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0.02) 100%);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        &.type-offensive {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(0, 0, 0, 0.02) 100%);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        &.type-control {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(0, 0, 0, 0.02) 100%);
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+
+        &.type-perception {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(0, 0, 0, 0.02) 100%);
+            border-color: rgba(251, 191, 36, 0.3);
+        }
+
+        &.type-time {
+            background: linear-gradient(135deg, rgba(156, 163, 175, 0.1) 0%, rgba(0, 0, 0, 0.02) 100%);
+            border-color: rgba(156, 163, 175, 0.3);
+        }
+
+        &.type-stealth {
+            background: linear-gradient(135deg, rgba(75, 85, 99, 0.1) 0%, rgba(0, 0, 0, 0.02) 100%);
+            border-color: rgba(75, 85, 99, 0.3);
+        }
+
+        &.type-summon {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(0, 0, 0, 0.02) 100%);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        &.type-passive {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(0, 0, 0, 0.02) 100%);
+            border-color: rgba(236, 72, 153, 0.3);
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.7s ease;
+            z-index: 1;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: white;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+        }
+
+        .power-icon-wrapper {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+            transition: all 0.4s ease;
+
+            .power-icon-image {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+                transition: all 0.4s ease;
+            }
+
+            .power-icon-emoji {
+                font-size: 36px;
+                filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+                transition: all 0.4s ease;
+            }
+        }
+
+        &:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-8px);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.7),
+                0 0 40px rgba(255, 255, 255, 0.08);
+
+            &::before {
+                left: 100%;
+            }
+
+            &::after {
+                width: 100%;
+            }
+
+            .power-icon-wrapper {
+                transform: scale(1.15) rotate(5deg);
+                
+                .power-icon-image {
+                    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.6));
+                }
+                
+                .power-icon-emoji {
+                    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.6));
+                }
+            }
+
+            // Type-specific hover glows
+            &.type-movement {
+                box-shadow: 
+                    0 20px 60px rgba(0, 0, 0, 0.7),
+                    0 0 40px rgba(59, 130, 246, 0.4);
+            }
+
+            &.type-offensive {
+                box-shadow: 
+                    0 20px 60px rgba(0, 0, 0, 0.7),
+                    0 0 40px rgba(239, 68, 68, 0.4);
+            }
+
+            &.type-control {
+                box-shadow: 
+                    0 20px 60px rgba(0, 0, 0, 0.7),
+                    0 0 40px rgba(168, 85, 247, 0.4);
+            }
+
+            &.type-perception {
+                box-shadow: 
+                    0 20px 60px rgba(0, 0, 0, 0.7),
+                    0 0 40px rgba(251, 191, 36, 0.4);
+            }
+
+            &.type-time {
+                box-shadow: 
+                    0 20px 60px rgba(0, 0, 0, 0.7),
+                    0 0 40px rgba(156, 163, 175, 0.4);
+            }
+
+            &.type-stealth {
+                box-shadow: 
+                    0 20px 60px rgba(0, 0, 0, 0.7),
+                    0 0 40px rgba(75, 85, 99, 0.4);
+            }
+
+            &.type-summon {
+                box-shadow: 
+                    0 20px 60px rgba(0, 0, 0, 0.7),
+                    0 0 40px rgba(16, 185, 129, 0.4);
+            }
+
+            &.type-passive {
+                box-shadow: 
+                    0 20px 60px rgba(0, 0, 0, 0.7),
+                    0 0 40px rgba(236, 72, 153, 0.4);
+            }
+
+            .power-icon {
+                opacity: 0.15;
+                transform: scale(1.1) rotate(5deg);
+            }
+
+            .power-name {
+                letter-spacing: 3px;
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            }
+
+            .power-tier-badge {
+                background: rgba(255, 255, 255, 0.15);
+                border-color: rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        .power-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 100px;
+            opacity: 0.08;
+            transition: all 0.5s ease;
+            z-index: 0;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.1));
+        }
+
+        .power-tier-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 10;
+            position: relative;
+        }
+
+        .power-name {
+            font-size: 24px;
+            font-weight: 900;
+            color: #fff;
+            margin: 0 0 15px 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            font-family: 'Arial Black', sans-serif;
+            position: relative;
+            z-index: 10;
+        }
+
+        .power-description {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.8;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 10;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .power-rune-cost {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 10;
+
+            .rune-icon {
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+            }
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .powers-grid {
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        }
+    }
+
+    @media (max-width: 768px) {
+        padding: 60px 20px 40px;
+
+        .page-header {
+            margin-bottom: 50px;
+
+            .page-title {
+                font-size: 36px;
+                letter-spacing: 6px;
+            }
+
+            .game-badge {
+                font-size: 10px;
+            }
+        }
+
+        .powers-grid {
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        .power-card {
+            padding: 30px 25px;
+
+            .power-icon {
+                font-size: 70px;
+                top: 15px;
+                right: 15px;
+            }
+
+            .power-name {
+                font-size: 20px;
+            }
+        }
+    }
+}
